@@ -5,7 +5,7 @@ This [motoko] library provides a module to help create an append-only logger act
 ## Usage
 
 You can use this library with the [vessel] package manager.
-A sample usage of creating a logger actor (or canister) from the [Logger](./src/Logger.mo) module can be found in [./example].
+A sample usage of creating a logger actor (or canister) from the [Logger](./src/Logger.mo) module can be found in the [example](./example/) sub-directory.
 You'll need both [dfx] and [vessel] in PATH before trying it out:
 
 ```
@@ -28,11 +28,11 @@ type Stats =
    start_index: nat;
  };
 service : {
-   allow: (vec principal) -> () oneway; // Allow the list of canisters to call the `append` method.
-   append: (vec text) -> () oneway;     // Append some text to the end of the log.
-   pop_buckets: (nat) -> () oneway;     // Remove the given number of bucket from the front of the log.
-   stats: () -> (Stats) query;          // Get the latest stats of the logger.
-   view: (nat, nat) -> (View) query;    // View the log of the given interval (inclusive).
+   allow: (vec principal) -> () oneway; // Allow some canisters to call the `append` method.
+   append: (vec text) -> () oneway;     // Append a set of new log entries.
+   pop_buckets: (nat) -> () oneway;     // Remove the given number of oldest buckets.
+   stats: () -> (Stats) query;          // Get the latest logger stats.
+   view: (nat, nat) -> (View) query;    // View logs in the given index interval (inclusive).
 }
 ```
 
