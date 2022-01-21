@@ -79,8 +79,8 @@ Here are some example log entries from [tipjar]:
 
 It has a `heartbeat` method that logs `BeforeCheck` and `AfterCheck`.
 These entries are ordered by when the Logger receives the `append` call.
-We can see that `1642198872792672023` has two entries that do not appear next to each other,
-But we can easily tell they are from the same "session" because of the common prefix (that implies they were produced by the same logger).
+We can see that `1642198872792672023` has two entries that do not appear next to each other.
+And yet we can still tell they are from the same "session" because of the common prefix.
 
 ## Development
 
