@@ -20,6 +20,7 @@ shared(msg) actor class TextLogger() {
 
   // Set allowed principals.
   public shared (msg) func allow(ids: [Principal]) {
+    assert(msg.caller == OWNER);
     allowed := ids;
   };
 

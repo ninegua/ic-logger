@@ -41,8 +41,8 @@ service : {
 1. The logger actor provides a single `append` method for other actors to call.
 2. The logger will keep all past logs in the order as they were received, and every logline has an index or line number.
    These logs are stored in "buckets", and when a bucket is full, the next bucket is created.
-   Buckets are also numbered, and the capacity of a bucket is preconfigured in the code.
-3. The controller of the logger can perform some adminstrative duties, such as changing which canisters are allowed to call `append`, or remove old buckets to save some space.
+   Buckets are also numbered, and the capacity of a bucket is configurable when initializing the `Logger` class.
+3. The controller can perform some adminstrative duties, such as changing which canisters are allowed to call `append`, or remove old buckets to save some space.
 4. When an old bucket is removed, it does not change the index of log lines. This means querying logs using `view(..)` should given consistent results (unless they are removed).
 
 ## Development
