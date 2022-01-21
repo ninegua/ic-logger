@@ -1,0 +1,18 @@
+type View = 
+ record {
+   messages: vec text;
+   start_index: nat;
+ };
+type Stats = 
+ record {
+   bucket_sizes: vec nat;
+   start_index: nat;
+ };
+service : {
+   allow: (vec principal) -> () oneway;
+   append: (vec text) -> () oneway;
+   pop_buckets: (nat) -> () oneway;
+   stats: () -> (Stats) query;
+   view: (nat, nat) -> (View) query;
+}
+

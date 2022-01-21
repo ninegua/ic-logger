@@ -7,7 +7,7 @@ import List "mo:base/List";
 import Nat "mo:base/Nat";
 import Option "mo:base/Option";
 
-import Logger "./Logger";
+import Logger "mo:ic-logger/Logger";
 
 shared(msg) actor class TextLogger() {
   let OWNER = msg.caller;
