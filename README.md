@@ -43,7 +43,7 @@ service : {
    These logs are stored in "buckets", and when a bucket is full, the next bucket is created.
    Buckets are also numbered, and the capacity of a bucket is preconfigured in the code.
 3. The controller of the logger can perform some adminstrative duties, such as changing which canisters are allowed to call `append`, or remove old buckets to save some space.
-4. When an old bucket is removed, it does not change the index of long line. This means querying logs using `view(..)` should always return the same content (if the log lines in the interval has not yet been removed).
+4. When an old bucket is removed, it does not change the index of log lines. This means querying logs using `view(..)` should given consistent results (unless they are removed).
 
 ## Development
 
