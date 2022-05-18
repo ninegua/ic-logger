@@ -2,7 +2,7 @@ let upstream = https://github.com/dfinity/vessel-package-set/releases/download/m
 let additions = [
       { name = "ic-logger"
       , repo = "https://github.com/ninegua/ic-logger"
-      , version = "95e06542158fc750be828081b57834062aa83357"
+      , version = "95e43be3fcc285121b5bb1357bfd617efc2b2234"
       , dependencies = [ "base" ]
       }
     ]
