@@ -77,7 +77,7 @@ module {
        for (msg in msgs.vals()) {
          s.bucket := List.push(msg, s.bucket);
          s.num_of_lines := s.num_of_lines + 1;
-         if (s.num_of_lines >= BUCKET_SIZE) {
+         if (s.num_of_lines >= s.bucket_size) {
             roll_over()
          }
        }
