@@ -16,6 +16,12 @@ func test() : Suite {
   let N = 10;
   let S = 3;
   let logger = Logger.Logger<Nat>(Logger.new(0, ?S));
+
+  let stats_tests = List.fromArray<Suite>([
+    Suite.test("empty stats",
+      logger.stats().start_index,
+      Matchers.equals(T.nat(0)))]);
+
   let append_test = Suite.suite("append",
     Array.tabulate<Suite>(N, func(n: Nat): Suite {
       logger.append([n]);
@@ -24,6 +30,12 @@ func test() : Suite {
         Matchers.equals(T.array<Nat>(T.natTestable,
           Array.tabulate<Nat>(n + 1, func(x: Nat): Nat { x }))))
     }));
+
+  stats_tests.add(
+    Suite.test("non-empty stats",
+      logger.stats().bucket_sizes,
+      Matchers.equals(T.array<Nat>(T.natTestable,
+        [3, 3, 3, 1]))));
 
   let view_tests = List.empty<Suite>();
   for (i in Nat.range(0, N - 1)) {
@@ -55,7 +67,18 @@ func test() : Suite {
   };
   let view_test_after_pop = Suite.suite("view", List.toArray(view_tests_after_pop));
 
-  Suite.suite("Test Logger", [ append_test, view_test, view_test_after_pop ])
+  stats_tests.add(
+    Suite.test("non-zero start_index",
+      logger.stats().start_index,
+      Matchers.equals(T.nat(6))));
+  stats_tests.add(
+    Suite.test("final buckets",
+      logger.stats().bucket_sizes,
+      Matchers.equals(T.array<Nat>(T.natTestable,
+        [3, 1]))));
+  let stats_test = Suite.suite("stats", List.toArray(stats_tests));
+
+  Suite.suite("Test Logger", [ stats_test, append_test, view_test, view_test_after_pop, stats_test ])
 };
 
 Suite.run(test())

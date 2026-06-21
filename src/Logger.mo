@@ -68,7 +68,7 @@ module {
     //   start_index is the first index of log message.
     //   bucket_sizes is the size of all buckets, from oldest to newest.
     public func stats() : Stats {
-      let bucket_sizes = VarArray.repeat<Nat>(s.num_of_buckets + 1, 0);
+      let bucket_sizes = VarArray.repeat<Nat>(0, s.num_of_buckets + 1);
       var i = s.num_of_buckets;
       bucket_sizes[i] := s.num_of_lines;
       var bs = s.buckets;
