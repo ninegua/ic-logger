@@ -1,0 +1,8 @@
+canisters:
+  - name: TextLogger
+    build:
+      steps: 
+        - type: script
+          commands: 
+            - moc -o "$ICP_WASM_OUTPUT_PATH" $(vessel sources) TextLogger.mo
+

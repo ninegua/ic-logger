@@ -1,4 +1,4 @@
 {
-  dependencies = [ "base", "matchers", "ic-logger" ],
+  dependencies = [ "core", "ic-logger" ],
   compiler = None Text
 }

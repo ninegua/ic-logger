@@ -1,31 +1,27 @@
 // Persistent logger keeping track of what is going on.
 
-import Array "mo:base/Array";
-import Buffer "mo:base/Buffer";
-import Deque "mo:base/Deque";
-import List "mo:base/List";
-import Nat "mo:base/Nat";
-import Option "mo:base/Option";
+import Array "mo:core/Array";
+import Option "mo:core/Option";
 
 import Logger "mo:ic-logger/Logger";
 
-shared(msg) actor class TextLogger() {
-  let OWNER = msg.caller;
+shared(msg) persistent actor class TextLogger() {
+  transient let OWNER = msg.caller;
 
-  stable var state : Logger.State<Text> = Logger.new<Text>(0, null);
-  let logger = Logger.Logger<Text>(state);
+  let state : Logger.State<Text> = Logger.new<Text>(0, null);
+  transient let logger = Logger.Logger<Text>(state);
 
   // Principals that are allowed to log messages.
-  stable var allowed : [Principal] = [OWNER];
+  var allowed : [Principal] = [OWNER];
 
   // Set allowed principals.
-  public shared (msg) func allow(ids: [Principal]) {
+  public shared (msg) func allow(ids: [Principal]) : async () {
     assert(msg.caller == OWNER);
     allowed := ids;
   };
 
   // Add a set of messages to the log.
-  public shared (msg) func append(msgs: [Text]) {
+  public shared (msg) func append(msgs: [Text]) : async () {
     assert(Option.isSome(Array.find(allowed, func (id: Principal) : Bool { msg.caller == id })));
     logger.append(msgs);
   };
@@ -44,7 +40,7 @@ shared(msg) actor class TextLogger() {
   };
 
   // Drop past buckets (oldest first).
-  public shared (msg) func pop_buckets(num: Nat) {
+  public shared (msg) func pop_buckets(num: Nat) : async () {
     assert(msg.caller == OWNER);
     logger.pop_buckets(num)
   }
