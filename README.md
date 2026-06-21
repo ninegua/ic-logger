@@ -6,11 +6,11 @@ This [motoko] library provides a module to help create an append-only logger act
 
 You can use this library with the [vessel] package manager.
 A sample usage of creating a logger actor (or canister) from the [Logger](./src/Logger.mo) module can be found in the [example](./example/) sub-directory.
-You'll need both [dfx] and [vessel] in PATH before trying it out:
+You'll need both [icp-cli] and [vessel] in PATH before trying it out:
 
 ```
 cd example
-dfx deploy
+icp deploy
 ```
 
 It creates a text-based logger and gives the controller a few privileged methods to use it.
@@ -57,7 +57,7 @@ Here is a helper function I use to solve this problem:
 func logger(name: Text) : Text -> async () {
   let prefix = "[" # Int.toText(Time.now()) # "/";
   func(s: Text) : async () {
-      Logger.append([prefix # Int.toText(Time.now() / 1_000_000_000) # "] " # name # ": " # s])
+      ignore Logger.append([prefix # Int.toText(Time.now() / 1_000_000_000) # "] " # name # ": " # s])
   }
 };
 ```
@@ -89,13 +89,12 @@ If you have installed a [nix] environment, you can run the tests like this:
 
 ```
 nix-shell
-cd test
-make
+make test
 ```
 
 [motoko]: https://github.com/dfinity/motoko
 [vessel]: https://github.com/dfinity/vessel
 [candid]: https://github.com/dfinity/candid
-[dfx]: https://github.com/dfinity/sdk
+[icp-cli]: https://github.com/dfinity/icp-cli
 [nix]: https://github.com/NixOS/nix
 [tipjar]: https://github.com/ninegua/tipjar

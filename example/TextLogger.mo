@@ -15,13 +15,13 @@ shared(msg) persistent actor class TextLogger() {
   var allowed : [Principal] = [OWNER];
 
   // Set allowed principals.
-  public shared (msg) func allow(ids: [Principal]) : async () {
+  public shared (msg) func allow(ids: [Principal]) : () {
     assert(msg.caller == OWNER);
     allowed := ids;
   };
 
   // Add a set of messages to the log.
-  public shared (msg) func append(msgs: [Text]) : async () {
+  public shared (msg) func append(msgs: [Text]) : () {
     assert(Option.isSome(Array.find(allowed, func (id: Principal) : Bool { msg.caller == id })));
     logger.append(msgs);
   };
@@ -40,7 +40,7 @@ shared(msg) persistent actor class TextLogger() {
   };
 
   // Drop past buckets (oldest first).
-  public shared (msg) func pop_buckets(num: Nat) : async () {
+  public shared (msg) func pop_buckets(num: Nat) : () {
     assert(msg.caller == OWNER);
     logger.pop_buckets(num)
   }
